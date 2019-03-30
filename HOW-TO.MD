@@ -67,6 +67,10 @@ spec:
 ```
 user2::1001:100:incoming,outgoing
 ```
+Updating list of users
+```
+kubectl create secret generic users --from-file=users.conf=./etc/sftp/users.conf
+```
 
 ## Applying Changes
 
