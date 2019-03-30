@@ -1,0 +1,52 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: sftp
+  namespace: sftp
+  labels:
+    environment: production
+    app: sftp
+spec:
+  strategy: RollingUpdate
+  replicas: 1
+  minReadySeconds: 10
+  template:
+    metadata:
+      labels:
+        environment: production
+        app: sftp
+    spec:
+      volumes:
+      - name: users
+        secret:
+          secretName: users 
+      - name: test
+        secret:
+          secretName: test
+      - name: user1
+        secret:
+          secretName: user1                          
+      - name: sftp-storage
+        hostPath:
+          path: /home/ftp-home              
+      containers:
+        - name: sftp
+          image: atmoz/sftp:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 22
+          volumeMounts:
+            - mountPath: /home/test/.ssh/keys
+              name: test
+              readOnly: true              
+            - mountPath: /home/user1/.ssh/keys
+              name: user1
+              readOnly: true          
+            - mountPath: /home
+              name: sftp-storage  
+            - mountPath: /etc/sftp
+              name: users                                    
+          securityContext:
+            capabilities:
+              add: ["SYS_ADMIN"]
+          resources: {}
