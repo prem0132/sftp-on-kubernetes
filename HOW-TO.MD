@@ -12,6 +12,7 @@ On running this command it will ask for name to store the file, give the user’
 it will then ask for passphrase, here if you want you can give a password for the private key or just leave it empty and then hit enter again
 
 ## Adding keys
+
 Now we will create a SECRET with the public key in the k8s cluster
 
 for this, go to the public key folder and create like this:
@@ -25,6 +26,7 @@ or you can use the script provided in conf directory
 
 Open the yaml file and add entries for this user like this,
 ### Adding secret as volume 
+
 `Public key of the user stoted in k8s as a secret`
 ```
 kind: Deployment
@@ -60,10 +62,14 @@ spec:
               name: user2
               readOnly: true              
 ```
-### Adding users in users.conf
 
-"user2::1001:100:incoming,outgoing"
+### Adding users in users.conf
+```
+user2::1001:100:incoming,outgoing
+```
 
 ## Applying Changes
 
+```
 kubectl apply -f <deployment file name>
+```
