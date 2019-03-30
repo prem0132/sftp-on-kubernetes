@@ -15,8 +15,9 @@ it will then ask for passphrase, here if you want you can give a password for th
 Now we will create a SECRET with the public key in the k8s cluster
 
 for this, go to the public key folder and create like this:
-
+```
 kubectl create secret -n sftp user2 –from-file=./user2.pub
+```
 
 or you can use the script provided in conf directory
 
